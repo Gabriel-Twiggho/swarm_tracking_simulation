@@ -9,8 +9,8 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Simple Pygame Script")
 
 # Define colors
-WHITE = (255, 255, 255)
-BLUE = (0, 0, 255)
+WHITE = (0, 0, 0)
+BLUE = (255, 0, 255)
 
 # Circle properties
 x, y = width // 2, height // 2
