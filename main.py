@@ -4,7 +4,7 @@ import pygame
 pygame.init()
 
 # Set up the display
-width, height = 500, 500
+width, height = 1750, 950
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Simple Pygame Script")
 
