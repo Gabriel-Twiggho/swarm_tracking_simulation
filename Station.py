@@ -3,6 +3,11 @@ from typing import List
 from GameObject import GameObject
 from Agent import Agent
 
+'''
+Parameters of station
+
+'''
+
 class Station(GameObject):
     def __init__(self, x: float, y: float):
         super().__init__(x, y)
