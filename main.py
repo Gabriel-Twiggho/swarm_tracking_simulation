@@ -47,7 +47,7 @@ pygame.quit()'''
 import pygame
 from Target import Target
 from SimulationManager import SimulationManager
-from GlobalScreen import screen
+import Globals
 
 # Initialize Pygame
 pygame.init()
@@ -55,7 +55,7 @@ pygame.init()
 
 _simulationManager=SimulationManager()
 clock = pygame.time.Clock()
-frame_count=0
+
 
 # Main loop
 running = True
@@ -63,11 +63,11 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    frame_count+=1
+    Globals.frame_count+=1
 
 
     _simulationManager.Update()
-    screen.fill((0,0,0))  
+    Globals.screen.fill((0,0,0))  
     _simulationManager.Draw()
 
     pygame.display.update()

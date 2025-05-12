@@ -1,5 +1,5 @@
 import pygame
-from GlobalScreen import screen
+import Globals
 from GameObject import GameObject
 
 class Target(GameObject):
@@ -44,4 +44,4 @@ class Target(GameObject):
         self.Move()
 
     def Draw(self):
-        pygame.draw.circle(screen, (255, 0, 0), (int(self.x), int(self.y)), 7)
+        pygame.draw.circle(Globals.screen, (255, 0, 0), (int(self.x), int(self.y)), 7)

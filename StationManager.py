@@ -1,6 +1,6 @@
 from typing import List
 from Station import Station
-from GlobalScreen import screen
+import Globals
 
 '''
 creating and holding all the Station instances. This is the right place to define their initial locations.
@@ -33,4 +33,4 @@ class StationManager:
 
     def Draw(self):
         for station in self.stations:
-            station.Draw(screen)
+            station.Draw()

@@ -1,7 +1,7 @@
 import pygame
 from typing import List
 from GameObject import GameObject
-from GlobalScreen  import screen
+import Globals
 #from Agent import Agent
 
 '''
@@ -22,11 +22,11 @@ class Station(GameObject):
         #This is only done as Gameobject class is inherited and recquires update function.
         pass
 
-    def Draw(self, screen_surface):
+    def Draw(self):
         #draw station
-        pygame.draw.rect(screen_surface, (0, 0, 255), (self.x - 5, self.y - 5, 10, 10))
+        pygame.draw.rect(Globals.screen, (0, 0, 255), (self.x - 5, self.y - 5, 10, 10))
 
         #draw station name
         font = pygame.font.Font(None, 24)
         text = font.render(self.name, True, (200,200,200))
-        screen_surface.blit(text, (self.x - 50, self.y + 10))
+        Globals.screen.blit(text, (self.x - 50, self.y + 10))
