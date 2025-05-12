@@ -1,23 +1,16 @@
 import pygame
 from typing import List
-from Agent import Agent
-from Station import Station
+from AgentManager import AgentManager
 from Target import Target
 
 class SimulationManager:
     def __init__(self):
-        self.agents: List[Agent] = []
-        self.stations: List[Station] = []
-        self.targets: List[Target] = []
+        self._agentManager = AgentManager()
+        self._target = Target(1000, 500)
 
-    def update(self):
-        for agent in self.agents:
-            agent.update()
+    def Update(self):
+        self._target.input_handler()
+        self._target.Update()
 
-    def draw(self, screen):
-        for station in self.stations:
-            station.draw(screen)
-        for agent in self.agents:
-            agent.draw(screen)
-        for target in self.targets:
-            target.draw(screen)
+    def Draw(self):
+        self._target.Draw()

@@ -6,9 +6,9 @@ class GameObject(ABC):
         self.y = y
 
     @abstractmethod
-    def update(self):
+    def Update(self):
         pass
 
     @abstractmethod
-    def draw(self, screen):
+    def Draw(self, screen):
         pass

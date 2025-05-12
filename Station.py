@@ -12,5 +12,5 @@ class Station(GameObject):
     def numAgentsDeployedHere(self):
         return len(self.agentsDeployedHere)
 
-    def draw(self, screen):
+    def Draw(self, screen):
         pygame.draw.rect(screen, (255, 0, 0), (self.x - 5, self.y - 5, 10, 10))

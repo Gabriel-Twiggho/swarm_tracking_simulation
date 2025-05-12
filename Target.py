@@ -1,4 +1,5 @@
 import pygame
+from GlobalScreen import screen
 from GameObject import GameObject
 
 class Target(GameObject):
@@ -21,12 +22,12 @@ class Target(GameObject):
         if keys[pygame.K_DOWN]:
             self.dy = self.speed
 
-    def move(self):
+    def Move(self):
         self.x += self.dx
         self.y += self.dy
 
-    def update(self):
-        self.move()
+    def Update(self):
+        self.Move()
 
-    def draw(self, screen):
+    def Draw(self):
         pygame.draw.circle(screen, (255, 0, 0), (int(self.x), int(self.y)), 7)
