@@ -14,10 +14,12 @@ class StationManager:
     def Spawn_stations(self):
         # Hardcoded locations fot stations
         station_locations = [
-            {"x": 200, "y": 200, "name": "Melbourne East PD"},
-            {"x": 700, "y": 300, "name": "St Kilda Road PD"},
-            {"x": 400, "y": 600, "name": "North Melbourne PD"},
-            {"x": 1200, "y": 700, "name": "Docklands PD"} 
+
+
+            {"x": 200, "y": 870, "name": "Sunshine/Braybrook Area"}, 
+            {"x": 540, "y": 750, "name": "Avondale Heights Area"},
+            {"x": 1000, "y": 700, "name": "Brunswick Area"},
+            {"x": 1300, "y": 800, "name": "Northcote/Thornbury Area"} 
         ]
 
         # Append station data to list of stations in init
