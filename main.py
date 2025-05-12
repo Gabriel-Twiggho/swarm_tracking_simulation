@@ -52,7 +52,7 @@ from GlobalScreen import screen
 # Initialize Pygame
 pygame.init()
 
-_target = Target(1000, 500)
+
 _simulationManager=SimulationManager()
 clock = pygame.time.Clock()
 
