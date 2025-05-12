@@ -15,11 +15,19 @@ class StationManager:
         # Hardcoded locations fot stations
         station_locations = [
 
+            {"x": 90, "y": 350, "name": "Far West Keilor Area"}, 
+            {"x": 490, "y": 270, "name": "Keilor Park"},
+            {"x": 890 , "y": 120, "name": "Broadmeadows Area"}, 
+            {"x": 1150, "y": 380, "name": "Hadfield Area"}, 
 
-            {"x": 200, "y": 870, "name": "Sunshine/Braybrook Area"}, 
-            {"x": 540, "y": 750, "name": "Avondale Heights Area"},
-            {"x": 1000, "y": 700, "name": "Brunswick Area"},
-            {"x": 1300, "y": 800, "name": "Northcote/Thornbury Area"} 
+            {"x": 890, "y": 610, "name": "Essendon Central"}, 
+            {"x": 1410, "y": 260, "name": "Preston North/Reservoir West"},
+            {"x": 1480, "y": 600, "name": "Preston Central"},
+
+            {"x": 200, "y": 870, "name": "Sunshine Area"}, 
+            {"x": 510, "y": 660, "name": "Avondale Heights Area"},
+            {"x": 1095, "y": 770, "name": "Brunswick Area"},
+            {"x": 1400, "y": 800, "name": "Northcote/Thornbury Area"} 
         ]
 
         # Append station data to list of stations in init
