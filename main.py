@@ -55,6 +55,7 @@ pygame.init()
 
 _simulationManager=SimulationManager()
 clock = pygame.time.Clock()
+frame_count=0
 
 # Main loop
 running = True
@@ -62,6 +63,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    frame_count+=1
 
 
     _simulationManager.Update()
