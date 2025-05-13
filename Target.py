@@ -20,7 +20,7 @@ class Target(GameObject):
         super().__init__(x, y)
         self.dx: float = 0.0
         self.dy: float = 0.0
-        self.speed: float = 1.0  # Movement speed per frame
+        self.speed: float = 2.0  # Movement speed per frame
 
     def input_handler(self):
         keys = pygame.key.get_pressed()
