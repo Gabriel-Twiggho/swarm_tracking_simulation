@@ -24,6 +24,9 @@ class Agent(GameObject):
         self.lsx=None#last sighting x position
         self.lsy=None#last sighting y postion
         self.lst=None#last sighting time
+        self.repulsiveForce:float=6
+        self.repulsiveForceMin=2
+        self.repulsiveForceMax=12
 
     def Update(self):
         self.Algo()
@@ -69,6 +72,13 @@ class Agent(GameObject):
             va = np.array([self.bestagent.lsx, self.bestagent.lsy]) - np.array([self.x, self.y])
             va = self.Normalize(va)
 
+
+
+        if self.CanSeeTarget==True: #and self.repulsiveForce>self.repulsiveForceMin:
+            self.repulsiveForce-=0.1
+        elif self.CanSeeTarget==False: #and self.repulsiveForce<self.repulsiveForceMax:
+            self.repulsiveForce+=0.01
+
         if self.CanSeeTarget() == False:
             for _agent in self._manager._agents:
                 idv_vr = np.array([0.0, 0.0])
@@ -79,7 +89,7 @@ class Agent(GameObject):
 
         vi = self.Normalize(np.array([self.velocity_x, self.velocity_y]))
 
-        v_new = self.Normalize(va+0.5*vr)
+        v_new = self.Normalize(va+self.repulsiveForce*vr*0.01)
         self.velocity_x = v_new[0]
         self.velocity_y = v_new[1]
 
