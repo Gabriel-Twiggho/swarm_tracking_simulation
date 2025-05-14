@@ -38,10 +38,24 @@ class Target(GameObject):
     def Move(self):
         self.x += self.dx
         self.y += self.dy
+    
+    def _enforce_bounds(self):
+        #clamp x positio
+        if self.x < Globals.TOPLEFT_X:
+            self.x = Globals.TOPLEFT_X
+        elif self.x > Globals.BOTTOMRIGHT_X:
+            self.x = Globals.BOTTOMRIGHT_X
+        
+        #clamp y position
+        if self.y < Globals.TOPLEFT_Y:
+            self.y = Globals.TOPLEFT_Y
+        elif self.y > Globals.BOTTOMRIGHT_Y:
+            self.y = Globals.BOTTOMRIGHT_Y
 
     def Update(self):
         self.input_handler()
         self.Move()
+        self._enforce_bounds() 
 
     def Draw(self):
         pygame.draw.circle(Globals.screen, (255, 0, 0), (int(self.x), int(self.y)), 7)

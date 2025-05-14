@@ -21,24 +21,40 @@ class Agent(GameObject):
     tmem=300
     speed=5
     communicationAmount=5
+
     def __init__(self, x: float, y: float, manager: 'AgentManager'):
         super().__init__(x, y)
         self._manager=manager
-        self.velocity_x = 0
-        self.velocity_y = 0
+        self.velocity_x = 0.0
+        self.velocity_y = 0.0
         self._losRange=50
         self.lsx=None#last sighting x position
         self.lsy=None#last sighting y postion
         self.lst=None#last sighting time
-        self.repulsiveForce:float=10000
-        self.repulsiveForceMin=10000
-        self.repulsiveForceMax=100000
+        self.repulsiveForce:float=10000.0
+        self.repulsiveForceMin=10000.0
+        self.repulsiveForceMax=100000.0
+        self.inertia_weight = 0.01
+
+    def _enforce_bounds(self):
+        #clamp x positio
+        if self.x < Globals.TOPLEFT_X:
+            self.x = Globals.TOPLEFT_X
+        elif self.x > Globals.BOTTOMRIGHT_X:
+            self.x = Globals.BOTTOMRIGHT_X
+        
+        #clamp y position
+        if self.y < Globals.TOPLEFT_Y:
+            self.y = Globals.TOPLEFT_Y
+        elif self.y > Globals.BOTTOMRIGHT_Y:
+            self.y = Globals.BOTTOMRIGHT_Y
 
     def Update(self):
         self.Algo()
         self.x += self.velocity_x
         self.y += self.velocity_y
-        self.CanSeeTarget()
+        self._enforce_bounds()
+        #self.CanSeeTarget() dont think this call is actually needed here
 
 
     def Draw(self):
@@ -64,10 +80,11 @@ class Agent(GameObject):
     def Algo(self):
         va = np.array([0.0, 0.0])
         vr = np.array([0.0, 0.0])
-        vi = np.array([0.0, 0.0])
+        #vi = np.array([0.0, 0.0])
 
         #finding best agent 
         self.bestagent: Agent = None
+
         for _agent in self._manager._agents:        
             if (_agent.lst is not None and _agent.lst>Globals.frame_count-self.tmem): #if lst
                 if self.bestagent is None:
@@ -82,13 +99,14 @@ class Agent(GameObject):
 
 
         #adaptive repulsion strength 
-        if self.CanSeeTarget==True and self.repulsiveForce>self.repulsiveForceMin:
-            self.repulsiveForce-=1000
-        elif self.CanSeeTarget==False and self.repulsiveForce<self.repulsiveForceMax:
-            self.repulsiveForce+=0.1
+        if self.CanSeeTarget():
+            if self.repulsiveForce > self.repulsiveForceMin:
+                self.repulsiveForce-=1000
+        else:
+            if self.repulsiveForce < self.repulsiveForceMax:
+                self.repulsiveForce+=0.1
 
         #calculating vr
-        
         for _agent in self._manager._agents:
             idv_vr = np.array([0.0, 0.0])
             idv_vr = np.array([self.x, self.y]) - np.array([_agent.x, _agent.y])
@@ -99,7 +117,9 @@ class Agent(GameObject):
         #vr = self.Normalize(vr)
         vr=vr/len(self._manager._agents)
 
-        vi = self.Normalize(np.array([self.velocity_x, self.velocity_y]))
+        #calculating inertia velocit (vi)
+        #vi = self.Normalize(np.array([self.velocity_x, self.velocity_y]))
+        #v_new = self.Normalize(va+vr*self.repulsiveForce + vi*self.inertia_weight)
 
         v_new = self.Normalize(va+vr*self.repulsiveForce)
         self.velocity_x = v_new[0]
