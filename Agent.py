@@ -26,13 +26,13 @@ class Agent(GameObject):
         self._manager=manager
         self.velocity_x = 0
         self.velocity_y = 0
-        self._losRange=100
+        self._losRange=50
         self.lsx=None#last sighting x position
         self.lsy=None#last sighting y postion
         self.lst=None#last sighting time
-        self.repulsiveForce:float=6
-        self.repulsiveForceMin=2
-        self.repulsiveForceMax=12
+        self.repulsiveForce:float=10000
+        self.repulsiveForceMin=10000
+        self.repulsiveForceMax=100000
 
     def Update(self):
         self.Algo()
@@ -82,10 +82,10 @@ class Agent(GameObject):
 
 
         #adaptive repulsion strength 
-        if self.CanSeeTarget==True: #and self.repulsiveForce>self.repulsiveForceMin:
-            self.repulsiveForce-=0.1
-        elif self.CanSeeTarget==False: #and self.repulsiveForce<self.repulsiveForceMax:
-            self.repulsiveForce+=0.01
+        if self.CanSeeTarget==True and self.repulsiveForce>self.repulsiveForceMin:
+            self.repulsiveForce-=1000
+        elif self.CanSeeTarget==False and self.repulsiveForce<self.repulsiveForceMax:
+            self.repulsiveForce+=0.1
 
         #calculating vr
         
@@ -101,19 +101,14 @@ class Agent(GameObject):
 
         vi = self.Normalize(np.array([self.velocity_x, self.velocity_y]))
 
-        v_new = self.Normalize(va+vr*100000)
+        v_new = self.Normalize(va+vr*self.repulsiveForce)
         self.velocity_x = v_new[0]
         self.velocity_y = v_new[1]
 
-            
-    
 
 
 
 
-                
-
-    
     @staticmethod
     def Distance(x1, y1, x2, y2):
         return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)

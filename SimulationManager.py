@@ -7,7 +7,7 @@ from StationManager import StationManager
 
 class SimulationManager:
     def __init__(self):
-        self._target = Target.get_instance(1000, 500)
+        self._target = Target.get_instance(1500, 500)
         self._agentManager=AgentManager()
         self._stationManager = StationManager()
         
