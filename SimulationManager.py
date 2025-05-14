@@ -2,7 +2,7 @@ import pygame
 from typing import List
 from AgentManager import AgentManager
 from Target import Target
-from Agent import Agent
+#from Agent import Agent not used currently
 from StationManager import StationManager
 
 class SimulationManager:
@@ -18,6 +18,9 @@ class SimulationManager:
         self._stationManager.Update()
 
     def Draw(self):
+        self._stationManager.Draw()
         self._target.Draw()
         self._agentManager.DrawAgents()
-        self._stationManager.Draw()
+
+    def is_target_in_los(self) -> bool:
+        return self._agentManager.CanSeeTarget()
