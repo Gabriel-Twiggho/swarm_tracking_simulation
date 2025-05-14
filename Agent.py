@@ -11,6 +11,12 @@ import math
 import numpy as np
 
 
+#implement repulsive strength proporsional to distance.
+#make boundaries for swarm and target
+#scale down LOS of swarm
+#implement goal tracking
+#implement standard time for simulation
+
 class Agent(GameObject):
     tmem=300
     speed=5
@@ -60,36 +66,42 @@ class Agent(GameObject):
         vr = np.array([0.0, 0.0])
         vi = np.array([0.0, 0.0])
 
+        #finding best agent 
         self.bestagent: Agent = None
         for _agent in self._manager._agents:        
-            if (_agent.lst is not None and _agent.lst>Globals.frame_count-self.tmem):
+            if (_agent.lst is not None and _agent.lst>Globals.frame_count-self.tmem): #if lst
                 if self.bestagent is None:
                     self.bestagent = _agent
                 elif self.bestagent is not None and _agent.lst > self.bestagent.lst:
                     self.bestagent = _agent
-
+        
+        #calculating Va
         if self.bestagent is not None:
             va = np.array([self.bestagent.lsx, self.bestagent.lsy]) - np.array([self.x, self.y])
             va = self.Normalize(va)
 
 
-
+        #adaptive repulsion strength 
         if self.CanSeeTarget==True: #and self.repulsiveForce>self.repulsiveForceMin:
             self.repulsiveForce-=0.1
         elif self.CanSeeTarget==False: #and self.repulsiveForce<self.repulsiveForceMax:
             self.repulsiveForce+=0.01
 
-        if self.CanSeeTarget() == False:
-            for _agent in self._manager._agents:
-                idv_vr = np.array([0.0, 0.0])
-                idv_vr = np.array([self.x, self.y]) - np.array([_agent.x, _agent.y])
-                idv_vr = self.Normalize(idv_vr)
-                vr += idv_vr
-            vr = self.Normalize(vr)
+        #calculating vr
+        
+        for _agent in self._manager._agents:
+            idv_vr = np.array([0.0, 0.0])
+            idv_vr = np.array([self.x, self.y]) - np.array([_agent.x, _agent.y])
+            idv_vr = self.Normalize(idv_vr)
+            idv_vr=idv_vr/((self.Distance(self.x,self.y,_agent.x,_agent.y)+1))**2
+            
+            vr += idv_vr
+        #vr = self.Normalize(vr)
+        vr=vr/len(self._manager._agents)
 
         vi = self.Normalize(np.array([self.velocity_x, self.velocity_y]))
 
-        v_new = self.Normalize(va+self.repulsiveForce*vr*0.01)
+        v_new = self.Normalize(va+vr*100000)
         self.velocity_x = v_new[0]
         self.velocity_y = v_new[1]
 
@@ -103,8 +115,8 @@ class Agent(GameObject):
 
     
     @staticmethod
-    def Distance(self, agent2 ):
-        return math.sqrt((self.x-agent2.x)**2+(self.y-agent2.y)**2)
+    def Distance(x1, y1, x2, y2):
+        return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
     
     @staticmethod
     def Normalize(vector):
