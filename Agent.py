@@ -19,7 +19,7 @@ import numpy as np
 
 class Agent(GameObject):
     tmem=300
-    speed=5
+    speed=1
     communicationAmount=5
 
     def __init__(self, x: float, y: float, manager: 'AgentManager'):
@@ -51,8 +51,8 @@ class Agent(GameObject):
 
     def Update(self):
         self.Algo()
-        self.x += self.velocity_x
-        self.y += self.velocity_y
+        self.x += self.velocity_x * self.speed
+        self.y += self.velocity_y * self.speed
         self._enforce_bounds()
         self.CanSeeTarget() 
 

@@ -4,6 +4,7 @@ from AgentManager import AgentManager
 from Target import Target
 #from Agent import Agent not used currently
 from StationManager import StationManager
+import Globals
 
 class SimulationManager:
     def __init__(self):
